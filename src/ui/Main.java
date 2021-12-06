@@ -7,6 +7,7 @@ package ui;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import pojos.Patient;
 import static utils.InputOutput.getFloatFromKeyboard;
@@ -88,7 +89,7 @@ public class Main {
         }
         return patient_id;
     }
-    
+
     public static int searchForm(List<Patient> patientList) {
         int patient_id = 0;
         if (!patientList.isEmpty()) {
@@ -111,9 +112,27 @@ public class Main {
 
     public static void printForm(Patient patient) {
         byte[] form = patient.getPatient_form();
-        
+        List<String> values = new ArrayList();
+        String pasar = "";
+        for (int i = 0; i < (form.length) - 1; i++) {
+            char value = (char) form[i];
+            int compare = (int) form[i];
+            while (compare != 10) {
+                value = (char) form[i];
+                compare = (int) form[i];
+                if (compare != 10) {
+                    pasar = pasar + value;
+                    i++;
+                }
+
+            }
+            values.add(pasar);
+            pasar = "";
+
+        }
+        System.out.println(values.toString());
     }
-    
+
     public static String changePassword() {
         String newPassword = getStringFromKeyboard("Introduce your new password: ");
         return newPassword;
