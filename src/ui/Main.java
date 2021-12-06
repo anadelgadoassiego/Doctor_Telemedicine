@@ -51,23 +51,69 @@ public class Main {
         return newName;
     }
 
-    public static String searchPatientByName() {
-        System.out.println("Please, enter the following information");
-        String name = getStringFromKeyboard("Enter the name of the patient you want to search: ");
-        return name;
-    }
-
-    public static void searchPatientByName2(List<Patient> patientList) {
+    public static void searchPatientByName(List<Patient> patientList) {
         if (!patientList.isEmpty()) {
             for (Patient patient : patientList) {
                 System.out.println(patient);
             }
+            String name = getStringFromKeyboard("Enter the name of the patient you want to search: ");
+            for (Patient patient : patientList) {
+                if (patient.getFull_name().contains(name)) {
+                    System.out.println(patient);
+                }
+            }
+
         } else {
             System.out.println("There are no patients with that name.");
         }
 
     }
 
+    public static int deletePatient(List<Patient> patientList) {
+        int patient_id = 0;
+        if (!patientList.isEmpty()) {
+            for (Patient patient : patientList) {
+                System.out.println(patient);
+            }
+            String name = getStringFromKeyboard("Enter the name of the patient you want to search: ");
+            for (Patient patient : patientList) {
+                if (patient.getFull_name().contains(name)) {
+                    System.out.println(patient);
+                }
+            }
+            patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to delete: "));
+
+        } else {
+            System.out.println("you do not have patients.");
+        }
+        return patient_id;
+    }
+    
+    public static int searchForm(List<Patient> patientList) {
+        int patient_id = 0;
+        if (!patientList.isEmpty()) {
+            for (Patient patient : patientList) {
+                System.out.println(patient);
+            }
+            String name = getStringFromKeyboard("Enter the name of the patient you want to search: ");
+            for (Patient patient : patientList) {
+                if (patient.getFull_name().contains(name)) {
+                    System.out.println(patient);
+                }
+            }
+            patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to see the form: "));
+
+        } else {
+            System.out.println("You do not have patients.");
+        }
+        return patient_id;
+    }
+
+    public static void printForm(Patient patient) {
+        byte[] form = patient.getPatient_form();
+        
+    }
+    
     public static String changePassword() {
         String newPassword = getStringFromKeyboard("Introduce your new password: ");
         return newPassword;

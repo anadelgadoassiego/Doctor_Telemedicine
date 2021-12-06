@@ -148,15 +148,13 @@ public class ClientSendCharactersViaNetwork {
                 dout2.writeInt(choice);
                 switch (choice) {
                     case 1:
-                        String response = ui.Main.searchPatientByName();
-                        dout2.writeUTF(response);
                         List<Patient> patientList = new ArrayList <Patient>();
                         Object tmp;
                         while ((tmp = objectInputStream.readObject()) != null) {
                             Patient patient = (Patient) tmp;
                             patientList.add(patient);
                         }
-                        ui.Main.searchPatientByName2(patientList);
+                        ui.Main.searchPatientByName(patientList);
                         break;
                     case 2:
                         String response_EMG_ECG = ui.Main.addEMG_addECG();
@@ -174,16 +172,26 @@ public class ClientSendCharactersViaNetwork {
                         ui.Main.searchEMGByName_patient(emgList);
                         break;
                     case 4:
-                        List<Ecg> ecgList = new ArrayList <Ecg>();
-                        Object tmp2;
-                        while ((tmp2 = objectInputStream.readObject()) != null) {
-                            Ecg ecg = (Ecg) tmp2;
-                            ecgList.add(ecg);
+                        List<Patient> patientList_form = new ArrayList <Patient>();
+                        Object tmp_form;
+                        while ((tmp_form = objectInputStream.readObject()) != null) {
+                            Patient patient = (Patient) tmp_form;
+                            patientList_form.add(patient);
                         }
-                        ui.Main.searchECGByName_patient(ecgList);
+                        int patientId_form = ui.Main.searchForm(patientList_form);
+                        dout2.writeInt(patientId_form);
+                        Patient patient_form = (Patient) objectInputStream.readObject();
+                        ui.Main.printForm(patient_form);
                         break;
                     case 5:
-
+                        List<Patient> patientList_delete = new ArrayList <Patient>();
+                        Object tmp_delete;
+                        while ((tmp_delete = objectInputStream.readObject()) != null) {
+                            Patient patient = (Patient) tmp_delete;
+                            patientList_delete.add(patient);
+                        }
+                        int patientId_delete = ui.Main.deletePatient(patientList_delete);
+                        dout2.writeInt(patientId_delete);
                     case 6:
                         String response_newUser = ui.Main.changeUsername();
                         dout2.writeUTF(response_newUser);
