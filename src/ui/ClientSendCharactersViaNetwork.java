@@ -192,6 +192,7 @@ public class ClientSendCharactersViaNetwork {
                         }
                         int patientId_delete = ui.Main.deletePatient(patientList_delete);
                         dout2.writeInt(patientId_delete);
+                        break;
                     case 6:
                         String response_newUser = ui.Main.changeUsername();
                         dout2.writeUTF(response_newUser);

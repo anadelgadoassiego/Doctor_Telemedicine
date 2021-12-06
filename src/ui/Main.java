@@ -130,7 +130,10 @@ public class Main {
             pasar = "";
 
         }
-        System.out.println(values.toString());
+        for (String value : values) {
+            System.out.println(value);
+        }
+        //System.out.println(values.toString());
     }
 
     public static String changePassword() {
