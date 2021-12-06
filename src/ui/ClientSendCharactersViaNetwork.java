@@ -29,7 +29,7 @@ public class ClientSendCharactersViaNetwork {
     public static void main(String args[]) throws IOException, Exception {
         int byteRead;
 
-        socket = new Socket("192.168.1.131", 9000);
+        socket = new Socket("192.168.68.112", 9000);
         InputStream console;
         InputStream inputStream;
         OutputStream outputStream;
@@ -195,7 +195,7 @@ public class ClientSendCharactersViaNetwork {
                     case 6:
                         String response_newUser = ui.Main.changeUsername();
                         dout2.writeUTF(response_newUser);
-                        okay = dint2.readUTF();
+                        String okay = dint2.readUTF();
                         System.out.println(okay);
                         break;
                     case 7:
@@ -211,7 +211,7 @@ public class ClientSendCharactersViaNetwork {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientSendCharactersViaNetwork.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
