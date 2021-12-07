@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import pojos.Ecg;
+import pojos.Emg;
 import pojos.Patient;
 import static utils.InputOutput.getFloatFromKeyboard;
 import static utils.InputOutput.getIntFromKeyboard;
@@ -89,6 +91,46 @@ public class Main {
         }
         return patient_id;
     }
+    
+    public static int searchEmg(List<Patient> patientList) {
+        int patient_id = 0;
+        if (!patientList.isEmpty()) {
+            for (Patient patient : patientList) {
+                System.out.println(patient);
+            }
+            String name = getStringFromKeyboard("Enter the name of the patient you want to search: ");
+            for (Patient patient : patientList) {
+                if (patient.getFull_name().contains(name)) {
+                    System.out.println(patient);
+                }
+            }
+            patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to search the emg: "));
+
+        } else {
+            System.out.println("you do not have patients.");
+        }
+        return patient_id;
+    }
+    public static int searchEcg(List<Patient> patientList) {
+        int patient_id = 0;
+        if (!patientList.isEmpty()) {
+            for (Patient patient : patientList) {
+                System.out.println(patient);
+            }
+            String name = getStringFromKeyboard("Enter the name of the patient you want to search: ");
+            for (Patient patient : patientList) {
+                if (patient.getFull_name().contains(name)) {
+                    System.out.println(patient);
+                }
+            }
+            patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to search the ecg: "));
+
+        } else {
+            System.out.println("you do not have patients.");
+        }
+        return patient_id;
+    }
+
 
     public static int searchForm(List<Patient> patientList) {
         int patient_id = 0;
@@ -109,7 +151,103 @@ public class Main {
         }
         return patient_id;
     }
+    public static void printEmg(List<Emg> emgList) throws Exception {
+        boolean found = false;
+        String month = getStringFromKeyboard("Introduce the month: ");
+        String day = getStringFromKeyboard("Introduce day: ");
+        String name_emg = month + day;
+        String name_select;
+        for (Emg emg : emgList) {
+            name_select = emg.getName_emg();
+            if (name_select.contains(name_emg)) {
+                System.out.println(name_select);
+            }
+        }
 
+        int position = Integer.parseInt(getStringFromKeyboard("Introduce the number of the emg"));
+        name_emg = "EMG_" + month + day + "_" + position + ".txt";
+        for (Emg emg : emgList) {
+            name_select = emg.getName_emg();
+            if (name_select.equals(name_emg)) {
+                System.out.println(emg);
+                found = true;
+                byte[] emg_values = emg.getPatient_emg();
+                List<String> values = new ArrayList();
+                String pasar = "";
+                System.out.println(emg_values.length);
+
+                for (int i = 0; i < (emg_values.length) - 1; i++) {
+                    char value = (char) emg_values[i];
+                    int compare = (int) emg_values[i];
+                    while (compare != 10) {
+                        value = (char) emg_values[i];
+                        compare = (int) emg_values[i];
+                        if (compare != 10) {
+                            pasar = pasar + value;
+                            i++;
+                        }
+
+                    }
+                    values.add(pasar);
+                    pasar = "";
+
+                }
+                System.out.println(values.toString());
+            }
+        }
+        if (!found) {
+            System.out.println("It does not exisist...");
+        }
+
+    }
+    
+    public static void printEcg(List<Ecg> ecgList) throws Exception {
+        boolean found = false;
+        String month = getStringFromKeyboard("Introduce the month: ");
+        String day = getStringFromKeyboard("Introduce day: ");
+        String name_ecg = month + day;
+        String name_select;
+        for (Ecg ecg : ecgList) {
+            name_select = ecg.getName_ecg();
+            if (name_select.contains(name_ecg)) {
+                System.out.println(name_select);
+            }
+        }
+
+        int position = Integer.parseInt(getStringFromKeyboard("Introduce the number of the ecg"));
+        name_ecg = "ECG_" + month + day + "_" + position + ".txt";
+        for (Ecg ecg : ecgList) {
+            name_select = ecg.getName_ecg();
+            if (name_select.equals(name_ecg)) {
+                System.out.println(ecg);
+                found = true;
+                byte[] ecg_values = ecg.getPatient_ecg();
+                List<String> values = new ArrayList();
+                String pasar = "";
+                for (int i = 0; i < (ecg_values.length) - 1; i++) {
+                    char value = (char) ecg_values[i];
+                    int compare = (int) ecg_values[i];
+                    while (compare != 10) {
+                        value = (char) ecg_values[i];
+                        compare = (int) ecg_values[i];
+                        if (compare != 10) {
+                            pasar = pasar + value;
+                            i++;
+                        }
+
+                    }
+                    values.add(pasar);
+                    pasar = "";
+
+                }
+                System.out.println(values.toString());
+            }
+        }
+        if (!found) {
+            System.out.println("It does not exisist...");
+        }
+
+    }
     public static void printForm(Patient patient) {
         byte[] form = patient.getPatient_form();
         List<String> values = new ArrayList();

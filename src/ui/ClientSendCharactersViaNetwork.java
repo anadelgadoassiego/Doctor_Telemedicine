@@ -11,11 +11,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pojos.Ecg;
+import pojos.Emg;
 import pojos.Patient;
 import static utils.InputOutput.getStringFromKeyboard;
 
@@ -29,7 +32,7 @@ public class ClientSendCharactersViaNetwork {
     public static void main(String args[]) throws IOException, Exception {
         int byteRead;
 
-        socket = new Socket("192.168.68.112", 9000);
+        socket = new Socket(InetAddress.getLocalHost(), 9000);
         InputStream console;
         InputStream inputStream;
         OutputStream outputStream;
@@ -157,19 +160,39 @@ public class ClientSendCharactersViaNetwork {
                         ui.Main.searchPatientByName(patientList);
                         break;
                     case 2:
-                        String response_EMG_ECG = ui.Main.addEMG_addECG();
-                        dout2.writeUTF(response_EMG_ECG);
-                        BITalino.BitalinoDemo.main(socket);
-                        break;
-                    case 3:
+                        List<Patient> patientList_emg = new ArrayList <Patient>();
+                        Object tmp_emg;
+                        while ((tmp_emg = objectInputStream.readObject()) != null) {
+                            Patient patient = (Patient) tmp_emg;
+                            patientList_emg.add(patient);
+                        }
+                        int patientId_emg = ui.Main.searchEmg(patientList_emg);
+                        dout2.writeInt(patientId_emg);
                         List<Emg> emgList = new ArrayList <Emg>();
-                        Object tmp;
-                        while ((tmp = objectInputStream.readObject()) != null) {
-                            Emg emg = (Emg) tmp;
+                        Object tmp_emgList;
+                        while ((tmp_emgList = objectInputStream.readObject()) != null) {
+                            Emg emg = (Emg) tmp_emgList;
                             emgList.add(emg);
                         }
-
-                        ui.Main.searchEMGByName_patient(emgList);
+                        ui.Main.printEmg(emgList);
+                        
+                        break;
+                    case 3:
+                        List<Patient> patientList_ecg = new ArrayList <Patient>();
+                        Object tmp_ecg;
+                        while ((tmp_ecg = objectInputStream.readObject()) != null) {
+                            Patient patient = (Patient) tmp_ecg;
+                            patientList_ecg.add(patient);
+                        }
+                        int patientId_ecg = ui.Main.searchEcg(patientList_ecg);
+                        dout2.writeInt(patientId_ecg);
+                        List<Ecg> ecgList = new ArrayList <Ecg>();
+                        Object tmp_ecgList;
+                        while ((tmp_ecgList = objectInputStream.readObject()) != null) {
+                            Ecg ecg = (Ecg) tmp_ecgList;
+                            ecgList.add(ecg);
+                        }
+                        ui.Main.printEcg(ecgList);
                         break;
                     case 4:
                         List<Patient> patientList_form = new ArrayList <Patient>();
