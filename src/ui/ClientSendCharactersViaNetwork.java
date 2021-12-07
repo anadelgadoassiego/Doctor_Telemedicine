@@ -79,17 +79,15 @@ public class ClientSendCharactersViaNetwork {
                         String response_login = ui.Main.login();
                         dout.writeUTF(response_login);
                         String okay = dint.readUTF();
-                        System.out.println(okay);
                         if (okay.equals("Welcome doctor !")) {
+                            System.out.println(okay);
                             menuDoctor();
-                           //releaseResources2(outputStream, console, inputStream, dint, dout);
+                        }else if(okay.equals("Welcome patient !")){
+                             System.out.println("Wrong credentials, please try again");
+                        }else{
+                             System.out.println(okay);
                         }
-                        /*socket = new Socket("192.168.68.112", 9000);
-                        outputStream = socket.getOutputStream();
-                        inputStream = socket.getInputStream();
-                        dint= new DataInputStream(inputStream);
-                        console = (System.in);
-                        dout = new DataOutputStream(outputStream);*/
+                        
                         break;
                         
                         

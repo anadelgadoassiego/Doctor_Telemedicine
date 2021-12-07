@@ -84,7 +84,13 @@ public class Main {
                     System.out.println(patient);
                 }
             }
-            patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to delete: "));
+            List<Integer> ids_patients = new ArrayList();
+            for (Patient patient : patientList) {
+                ids_patients.add(patient.getId());
+            }
+            do{
+             patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to delete: "));
+            }while(!ids_patients.contains(patient_id));
 
         } else {
             System.out.println("you do not have patients.");
@@ -104,7 +110,13 @@ public class Main {
                     System.out.println(patient);
                 }
             }
-            patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to search the emg: "));
+            List<Integer> ids_patients = new ArrayList();
+            for (Patient patient : patientList) {
+                ids_patients.add(patient.getId());
+            }
+            do{
+             patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to see the emg: "));
+            }while(!ids_patients.contains(patient_id));
 
         } else {
             System.out.println("you do not have patients.");
@@ -123,8 +135,13 @@ public class Main {
                     System.out.println(patient);
                 }
             }
-            patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to search the ecg: "));
-
+            List<Integer> ids_patients = new ArrayList();
+            for (Patient patient : patientList) {
+                ids_patients.add(patient.getId());
+            }
+            do{
+             patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to see the ecg: "));
+            }while(!ids_patients.contains(patient_id));
         } else {
             System.out.println("you do not have patients.");
         }
@@ -144,8 +161,13 @@ public class Main {
                     System.out.println(patient);
                 }
             }
-            patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to see the form: "));
-
+            List<Integer> ids_patients = new ArrayList();
+            for (Patient patient : patientList) {
+                ids_patients.add(patient.getId());
+            }
+            do{
+             patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to see the form: "));
+            }while(!ids_patients.contains(patient_id));
         } else {
             System.out.println("You do not have patients.");
         }
@@ -173,6 +195,7 @@ public class Main {
                 found = true;
                 byte[] emg_values = emg.getPatient_emg();
                 List<String> values = new ArrayList();
+                List<Integer> values_int = new ArrayList();
                 String pasar = "";
                 System.out.println(emg_values.length);
 
@@ -193,6 +216,9 @@ public class Main {
 
                 }
                 System.out.println(values.toString());
+                for (int i = 0; i < (values.size()) - 1; i++) {
+                    values_int.add(Integer.parseInt(values.get(i)));
+                }
             }
         }
         if (!found) {
@@ -223,6 +249,7 @@ public class Main {
                 found = true;
                 byte[] ecg_values = ecg.getPatient_ecg();
                 List<String> values = new ArrayList();
+                List<Integer> values_int = new ArrayList();
                 String pasar = "";
                 for (int i = 0; i < (ecg_values.length) - 1; i++) {
                     char value = (char) ecg_values[i];
@@ -241,6 +268,9 @@ public class Main {
 
                 }
                 System.out.println(values.toString());
+                for (int i = 0; i < (values.size()) - 1; i++) {
+                    values_int.add(Integer.parseInt(values.get(i)));
+                }
             }
         }
         if (!found) {
