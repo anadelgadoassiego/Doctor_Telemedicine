@@ -15,6 +15,7 @@ public class Emg implements Serializable {
     private String name_emg;
     private Integer patient_id;
     private byte[] patient_emg;
+    private byte[] form;
 
     public Emg(Integer id, String name_emg, Integer patient_id, byte[] patient_emg) {
         this.id = id;
@@ -86,6 +87,14 @@ public class Emg implements Serializable {
 
     public void setPatient_emg(byte[] patient_emg) {
         this.patient_emg = patient_emg;
+    }
+
+    public byte[] getForm() {
+        return form;
+    }
+
+    public void setForm(byte[] form) {
+        this.form = form;
     }
 
     

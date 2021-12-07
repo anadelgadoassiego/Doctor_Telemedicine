@@ -88,16 +88,16 @@ public class Main {
             for (Patient patient : patientList) {
                 ids_patients.add(patient.getId());
             }
-            do{
-             patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to delete: "));
-            }while(!ids_patients.contains(patient_id));
+            do {
+                patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to delete: "));
+            } while (!ids_patients.contains(patient_id));
 
         } else {
             System.out.println("you do not have patients.");
         }
         return patient_id;
     }
-    
+
     public static int searchEmg(List<Patient> patientList) {
         int patient_id = 0;
         if (!patientList.isEmpty()) {
@@ -114,15 +114,16 @@ public class Main {
             for (Patient patient : patientList) {
                 ids_patients.add(patient.getId());
             }
-            do{
-             patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to see the emg: "));
-            }while(!ids_patients.contains(patient_id));
+            do {
+                patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to see the emg: "));
+            } while (!ids_patients.contains(patient_id));
 
         } else {
             System.out.println("you do not have patients.");
         }
         return patient_id;
     }
+
     public static int searchEcg(List<Patient> patientList) {
         int patient_id = 0;
         if (!patientList.isEmpty()) {
@@ -139,15 +140,14 @@ public class Main {
             for (Patient patient : patientList) {
                 ids_patients.add(patient.getId());
             }
-            do{
-             patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to see the ecg: "));
-            }while(!ids_patients.contains(patient_id));
+            do {
+                patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to see the ecg: "));
+            } while (!ids_patients.contains(patient_id));
         } else {
             System.out.println("you do not have patients.");
         }
         return patient_id;
     }
-
 
     public static int searchForm(List<Patient> patientList) {
         int patient_id = 0;
@@ -165,14 +165,15 @@ public class Main {
             for (Patient patient : patientList) {
                 ids_patients.add(patient.getId());
             }
-            do{
-             patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to see the form: "));
-            }while(!ids_patients.contains(patient_id));
+            do {
+                patient_id = Integer.parseInt(getStringFromKeyboard("Enter the id of the patient you want to see the form: "));
+            } while (!ids_patients.contains(patient_id));
         } else {
             System.out.println("You do not have patients.");
         }
         return patient_id;
     }
+
     public static void printEmg(List<Emg> emgList) throws Exception {
         boolean found = false;
         String month = getStringFromKeyboard("Introduce the month: ");
@@ -191,7 +192,31 @@ public class Main {
         for (Emg emg : emgList) {
             name_select = emg.getName_emg();
             if (name_select.equals(name_emg)) {
-                System.out.println(emg);
+                //print form of emg
+                byte[] form = emg.getForm();
+                List<String> values_f = new ArrayList();
+                String pasar_f = "";
+                for (int i = 0; i < (form.length) - 1; i++) {
+                    char value_f = (char) form[i];
+                    int compare_f = (int) form[i];
+                    while (compare_f != 10) {
+                        value_f = (char) form[i];
+                        compare_f = (int) form[i];
+                        if (compare_f != 10) {
+                            pasar_f = pasar_f + value_f;
+                            i++;
+                        }
+
+                    }
+                    values_f.add(pasar_f);
+                    pasar_f = "";
+
+                }
+                for (String value_f : values_f) {
+                    System.out.println(value_f);
+                }
+
+                //print values of emg
                 found = true;
                 byte[] emg_values = emg.getPatient_emg();
                 List<String> values = new ArrayList();
@@ -226,7 +251,7 @@ public class Main {
         }
 
     }
-    
+
     public static void printEcg(List<Ecg> ecgList) throws Exception {
         boolean found = false;
         String month = getStringFromKeyboard("Introduce the month: ");
@@ -245,6 +270,31 @@ public class Main {
         for (Ecg ecg : ecgList) {
             name_select = ecg.getName_ecg();
             if (name_select.equals(name_ecg)) {
+                //print form of ecg
+                byte[] form = ecg.getForm();
+                List<String> values_f = new ArrayList();
+                String pasar_f = "";
+                for (int i = 0; i < (form.length) - 1; i++) {
+                    char value_f = (char) form[i];
+                    int compare_f = (int) form[i];
+                    while (compare_f != 10) {
+                        value_f = (char) form[i];
+                        compare_f = (int) form[i];
+                        if (compare_f != 10) {
+                            pasar_f = pasar_f + value_f;
+                            i++;
+                        }
+
+                    }
+                    values_f.add(pasar_f);
+                    pasar_f = "";
+
+                }
+                for (String value_f : values_f) {
+                    System.out.println(value_f);
+                }
+                
+                //print values of ecg
                 System.out.println(ecg);
                 found = true;
                 byte[] ecg_values = ecg.getPatient_ecg();
@@ -278,6 +328,7 @@ public class Main {
         }
 
     }
+
     public static void printForm(Patient patient) {
         byte[] form = patient.getPatient_form();
         List<String> values = new ArrayList();
