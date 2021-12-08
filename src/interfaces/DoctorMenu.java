@@ -289,7 +289,7 @@ public class DoctorMenu extends javax.swing.JFrame {
                     }
                     p = new DoctorMenu();
                     JOptionPane.showMessageDialog(p, values.toString());
-                    for (int i = 0; i < (values.size()) - 1; i++) {
+                    for (int i = 1; i < (values.size()) - 1; i++) {
                         values_int.add(Integer.parseInt(values.get(i)));
                         
                     }
@@ -663,7 +663,7 @@ public class DoctorMenu extends javax.swing.JFrame {
                     }
                     DoctorMenu p = new DoctorMenu();
                     JOptionPane.showMessageDialog(p, values.toString());
-                    for (int i = 0; i < (values.size()) - 1; i++) {
+                    for (int i = 1; i < (values.size()) - 1; i++) {
                         values_int.add(Integer.parseInt(values.get(i)));
                     }
                     values_int_public = values_int;
