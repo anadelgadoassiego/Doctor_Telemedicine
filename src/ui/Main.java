@@ -178,7 +178,7 @@ public class Main {
         boolean found = false;
         String month = getStringFromKeyboard("Introduce the month: ");
         String day = getStringFromKeyboard("Introduce day: ");
-        String name_emg = month + day;
+        String name_emg = month+day;
         String name_select;
         for (Emg emg : emgList) {
             name_select = emg.getName_emg();
@@ -222,7 +222,7 @@ public class Main {
                 List<String> values = new ArrayList();
                 List<Integer> values_int = new ArrayList();
                 String pasar = "";
-                System.out.println(emg_values.length);
+                
 
                 for (int i = 0; i < (emg_values.length) - 1; i++) {
                     char value = (char) emg_values[i];
@@ -241,7 +241,7 @@ public class Main {
 
                 }
                 System.out.println(values.toString());
-                for (int i = 0; i < (values.size()) - 1; i++) {
+                for (int i = 1; i < (values.size()) - 1; i++) {
                     values_int.add(Integer.parseInt(values.get(i)));
                 }
             }

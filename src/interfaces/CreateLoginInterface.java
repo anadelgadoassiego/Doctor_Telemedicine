@@ -8,6 +8,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -236,7 +237,7 @@ public class CreateLoginInterface extends javax.swing.JFrame {
             //</editor-fold>
             //</editor-fold>
             
-            socket = new Socket("192.168.1.131", 9000);
+            socket = new Socket(InetAddress.getLocalHost(), 9000);
             outputStream = socket.getOutputStream();
         
             inputStream = socket.getInputStream();
