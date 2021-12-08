@@ -318,7 +318,7 @@ public class Main {
 
                 }
                 System.out.println(values.toString());
-                for (int i = 0; i < (values.size()) - 1; i++) {
+                for (int i = 1; i < (values.size()) - 1; i++) {
                     values_int.add(Integer.parseInt(values.get(i)));
                 }
             }
@@ -333,6 +333,7 @@ public class Main {
         byte[] form = patient.getPatient_form();
         List<String> values = new ArrayList();
         String pasar = "";
+        if(form != null){
         for (int i = 0; i < (form.length) - 1; i++) {
             char value = (char) form[i];
             int compare = (int) form[i];
@@ -351,6 +352,7 @@ public class Main {
         }
         for (String value : values) {
             System.out.println(value);
+        }
         }
         //System.out.println(values.toString());
     }
