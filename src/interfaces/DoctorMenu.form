@@ -44,7 +44,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="136" max="32767" attributes="0"/>
+              <EmptySpace pref="135" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -97,6 +97,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Search EMG by name"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emgActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ecg">
       <Properties>
@@ -108,7 +111,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="form">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Search Form by name"/>
+        <Property name="text" type="java.lang.String" value="Search Clinical Trial by name"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="formActionPerformed"/>

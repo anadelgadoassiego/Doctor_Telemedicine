@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import pojos.Ecg;
+import pojos.Emg;
 import pojos.Patient;
 import static utils.InputOutput.getStringFromKeyboard;
 
@@ -31,9 +33,10 @@ public class DoctorMenu extends javax.swing.JFrame {
     private static DataOutputStream dout2;
     public static Socket socket2 = CreateLoginInterface.socket;
     public static ObjectInputStream objectInputStream;
-    //public static List<Doctor> doctorList = new ArrayList <Doctor>();
+    public static ObjectInputStream objectInputStream2;
+    public static List<Integer> values_int_public = new ArrayList();
     public static int id = 0;
-    public static List<Patient> patientList = new ArrayList <Patient>();
+    
     /**
      * Creates new form DoctorMenu
      */
@@ -72,6 +75,11 @@ public class DoctorMenu extends javax.swing.JFrame {
         });
 
         emg.setText("Search EMG by name");
+        emg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emgActionPerformed(evt);
+            }
+        });
 
         ecg.setText("Search ECG by name");
         ecg.addActionListener(new java.awt.event.ActionListener() {
@@ -80,7 +88,7 @@ public class DoctorMenu extends javax.swing.JFrame {
             }
         });
 
-        form.setText("Search Form by name");
+        form.setText("Search Clinical Trial by name");
         form.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 formActionPerformed(evt);
@@ -130,7 +138,7 @@ public class DoctorMenu extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(emg)
                             .addComponent(ecg))))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(back)
@@ -164,7 +172,147 @@ public class DoctorMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ecgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ecgActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            values_int_public = null;
+            outputStream2 = socket2.getOutputStream();
+            dout2 = new DataOutputStream(outputStream2);
+            inputStream2 = socket2.getInputStream();
+            dint2 = new DataInputStream(inputStream2);
+            int entero = 3;
+            dout2.writeInt(entero);
+            objectInputStream = new ObjectInputStream(inputStream2);
+            List<Patient> patientList = new ArrayList <Patient>();
+            Object tmp_ecg;
+            while ((tmp_ecg = objectInputStream.readObject()) != null) {
+                Patient patient = (Patient) tmp_ecg;
+                patientList.add(patient);
+            }
+            int patient_id = 0;
+            if (!patientList.isEmpty()) {
+                for (Patient patient : patientList) {
+                    DoctorMenu p = new DoctorMenu();
+                    JOptionPane.showMessageDialog(p, patient);
+                }
+                String name = JOptionPane.showInputDialog("Enter the name of the patient you want to search: ");
+                for (Patient patient : patientList) {
+                    if (patient.getFull_name().contains(name)) {
+                        DoctorMenu p = new DoctorMenu();
+                        JOptionPane.showMessageDialog(p, patient);
+                    }
+                }
+                List<Integer> ids_patients = new ArrayList();
+                
+                for (Patient patient : patientList) {
+                    ids_patients.add(patient.getId());
+                }
+                do {
+                    patient_id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id of the patient you want to see the emg: "));
+                } while (!ids_patients.contains(patient_id));
+                
+            } else {
+                DoctorMenu p = new DoctorMenu();
+                JOptionPane.showMessageDialog(p, "You do not have patients");
+            }
+            dout2.writeInt(patient_id);
+            List<Ecg> ecgList = new ArrayList <Ecg>();
+            Object tmp_ecgList;
+            while ((tmp_ecgList = objectInputStream.readObject()) != null) {
+                Ecg ecg = (Ecg) tmp_ecgList;
+                ecgList.add(ecg);
+            }
+            boolean found = false;
+            String month = JOptionPane.showInputDialog("Introduce the month: ");
+            String day = JOptionPane.showInputDialog("Introduce the day: ");
+            String name_ecg = month + day;
+            String name_select;
+            for (Ecg ecg : ecgList) {
+                name_select = ecg.getName_ecg();
+                if (name_select.contains(name_ecg)) {
+                    System.out.println(name_select);
+                }
+            }
+            
+            int position = Integer.parseInt(JOptionPane.showInputDialog("Introduce the number of the EMG: "));
+            name_ecg = "ECG_" + month + day + "_" + position + ".txt";
+            for (Ecg ecg : ecgList) {
+                name_select = ecg.getName_ecg();
+                if (name_select.equals(name_ecg)) {
+                    //print form of ecg
+                    byte[] form = ecg.getForm();
+                    List<String> values_f = new ArrayList();
+                    String pasar_f = "";
+                    for (int i = 0; i < (form.length) - 1; i++) {
+                        char value_f = (char) form[i];
+                        int compare_f = (int) form[i];
+                        while (compare_f != 10) {
+                            value_f = (char) form[i];
+                            compare_f = (int) form[i];
+                            if (compare_f != 10) {
+                                pasar_f = pasar_f + value_f;
+                                i++;
+                            }
+                            
+                        }
+                        values_f.add(pasar_f);
+                        pasar_f = "";
+                        
+                    }
+                    for (String value_f : values_f) {
+                        DoctorMenu p = new DoctorMenu();
+                        JOptionPane.showMessageDialog(p, value_f);
+                    }
+                    
+                    //print values of ecg
+                    DoctorMenu p = new DoctorMenu();
+                    //JOptionPane.showMessageDialog(p, ecg);
+                    found = true;
+                    byte[] ecg_values = ecg.getPatient_ecg();
+                    List<String> values = new ArrayList();
+                    List<Integer> values_int = new ArrayList();
+                    String pasar = "";
+                    for (int i = 0; i < (ecg_values.length) - 1; i++) {
+                        char value = (char) ecg_values[i];
+                        int compare = (int) ecg_values[i];
+                        while (compare != 10) {
+                            value = (char) ecg_values[i];
+                            compare = (int) ecg_values[i];
+                            if (compare != 10) {
+                                pasar = pasar + value;
+                                i++;
+                            }
+                            
+                        }
+                        values.add(pasar);
+                        pasar = "";
+                        
+                    }
+                    p = new DoctorMenu();
+                    JOptionPane.showMessageDialog(p, values.toString());
+                    for (int i = 0; i < (values.size()) - 1; i++) {
+                        values_int.add(Integer.parseInt(values.get(i)));
+                        
+                    }
+                    values_int_public = values_int;
+                    Graficas_ECG graficar = new Graficas_ECG();
+                    graficar.setVisible(true);
+                }
+            }
+            if (!found) {
+                DoctorMenu p = new DoctorMenu();
+                JOptionPane.showMessageDialog(p, "It does not exist ");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    DoctorMenu p = new DoctorMenu();
+    p.setVisible(true);
+    this.setVisible(false);    
+    
+
+            
     }//GEN-LAST:event_ecgActionPerformed
 
     private void patbynameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patbynameActionPerformed
@@ -173,11 +321,12 @@ public class DoctorMenu extends javax.swing.JFrame {
             outputStream2 = socket2.getOutputStream();
             dout2 = new DataOutputStream(outputStream2);
             inputStream2 = socket2.getInputStream();
-            dint2 = new DataInputStream(inputStream2);
+            //dint2 = new DataInputStream(inputStream2);
             int entero = 1;
             dout2.writeInt(entero);
             objectInputStream = new ObjectInputStream(inputStream2);
             Object tmp;
+            List<Patient> patientList = new ArrayList <Patient>();
             while ((tmp = objectInputStream.readObject()) != null) {
                 Patient patient = (Patient) tmp;
                 patientList.add(patient);
@@ -210,6 +359,7 @@ public class DoctorMenu extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         DoctorMenu p = new DoctorMenu();
         p.setVisible(true);
         this.setVisible(false);
@@ -221,13 +371,13 @@ public class DoctorMenu extends javax.swing.JFrame {
             outputStream2 = socket2.getOutputStream();
             dout2 = new DataOutputStream(outputStream2);
             inputStream2 = socket2.getInputStream();
-            dint2 = new DataInputStream(inputStream2);
+            //dint2 = new DataInputStream(inputStream2);
             int entero = 4;
             dout2.writeInt(entero);
-            objectInputStream = new ObjectInputStream(inputStream2);
+            objectInputStream2 = new ObjectInputStream(inputStream2);
             Object tmp;
-            
-            while ((tmp = objectInputStream.readObject()) != null) {
+            List<Patient> patientList = new ArrayList <Patient>();
+            while ((tmp = objectInputStream2.readObject()) != null) {
                 Patient patient = (Patient) tmp;
                 patientList.add(patient);
                 
@@ -253,7 +403,7 @@ public class DoctorMenu extends javax.swing.JFrame {
             }
             
             dout2.writeInt(patient_id);
-            Patient patient_form = (Patient) objectInputStream.readObject();
+            Patient patient_form = (Patient) objectInputStream2.readObject();
             byte[] form = patient_form.getPatient_form();
             List<String> values = new ArrayList();
             String pasar = "";
@@ -357,6 +507,7 @@ public class DoctorMenu extends javax.swing.JFrame {
             dout2.writeInt(entero);
             objectInputStream = new ObjectInputStream(inputStream2);
             Object tmp;
+            List<Patient> patientList = new ArrayList <Patient>();
             while ((tmp = objectInputStream.readObject()) != null) {
                 Patient patient = (Patient) tmp;
                 patientList.add(patient);
@@ -390,6 +541,153 @@ public class DoctorMenu extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_deleteActionPerformed
 
+    private void emgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emgActionPerformed
+        try {
+            // TODO add your handling code here:
+            values_int_public = null;
+            outputStream2 = socket2.getOutputStream();
+            dout2 = new DataOutputStream(outputStream2);
+            inputStream2 = socket2.getInputStream();
+            dint2 = new DataInputStream(inputStream2);
+            int entero = 2;
+            dout2.writeInt(entero);
+            objectInputStream = new ObjectInputStream(inputStream2);
+            List<Patient> patientList = new ArrayList <Patient>();
+            Object tmp_emg;
+            while ((tmp_emg = objectInputStream.readObject()) != null) {
+                Patient patient = (Patient) tmp_emg;
+                patientList.add(patient);
+            }
+            int patient_id = 0;
+            if (!patientList.isEmpty()) {
+            for (Patient patient : patientList) {
+                DoctorMenu p = new DoctorMenu();
+                JOptionPane.showMessageDialog(p, patient);
+            }
+            String name = JOptionPane.showInputDialog("Enter the name of the patient you want to search: ");
+            for (Patient patient : patientList) {
+                if (patient.getFull_name().contains(name)) {
+                    DoctorMenu p = new DoctorMenu();
+                    JOptionPane.showMessageDialog(p, patient);
+                }
+            }
+            List<Integer> ids_patients = new ArrayList();
+            
+            for (Patient patient : patientList) {
+                ids_patients.add(patient.getId());
+            }
+            do {
+                patient_id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id of the patient you want to see the emg: "));
+            } while (!ids_patients.contains(patient_id));
+
+            } else {
+                DoctorMenu p = new DoctorMenu();
+                JOptionPane.showMessageDialog(p, "You do not have patients");
+            }
+            
+            dout2.writeInt(patient_id);
+            List<Emg> emgList = new ArrayList <Emg>();
+            Object tmp_emgList;
+            while ((tmp_emgList = objectInputStream.readObject()) != null) {
+                Emg emg = (Emg) tmp_emgList;
+                emgList.add(emg);
+            }
+            
+            boolean found = false;
+            String month = JOptionPane.showInputDialog("Introduce the month: ");
+            String day = JOptionPane.showInputDialog("Introduce the day: ");
+
+            String name_emg = month + day;
+            String name_select;
+            for (Emg emg : emgList) {
+                name_select = emg.getName_emg();
+                if (name_select.contains(name_emg)) {
+                    DoctorMenu p = new DoctorMenu();
+                    JOptionPane.showMessageDialog(p, name_select);
+                }
+            }
+
+            int position = Integer.parseInt(JOptionPane.showInputDialog("Introduce the number of the EMG: "));
+            name_emg = "EMG_" + month + day + "_" + position + ".txt";
+            for (Emg emg : emgList) {
+                name_select = emg.getName_emg();
+                if (name_select.equals(name_emg)) {
+                    //print form of emg
+                    byte[] form = emg.getForm();
+                    List<String> values_f = new ArrayList();
+                    String pasar_f = "";
+                    for (int i = 0; i < (form.length) - 1; i++) {
+                        char value_f = (char) form[i];
+                        int compare_f = (int) form[i];
+                        while (compare_f != 10) {
+                            value_f = (char) form[i];
+                            compare_f = (int) form[i];
+                            if (compare_f != 10) {
+                                pasar_f = pasar_f + value_f;
+                                i++;
+                            }
+
+                        }
+                        values_f.add(pasar_f);
+                        pasar_f = "";
+
+                    }
+                    for (String value_f : values_f) {
+                        DoctorMenu p = new DoctorMenu();
+                        JOptionPane.showMessageDialog(p, value_f);
+                    }
+
+                    //print values of emg
+                    found = true;
+                    byte[] emg_values = emg.getPatient_emg();
+                    List<String> values = new ArrayList();
+                    List<Integer> values_int = new ArrayList();
+                    String pasar = "";
+                    System.out.println(emg_values.length);
+
+                    for (int i = 0; i < (emg_values.length) - 1; i++) {
+                        char value = (char) emg_values[i];
+                        int compare = (int) emg_values[i];
+                        while (compare != 10) {
+                            value = (char) emg_values[i];
+                            compare = (int) emg_values[i];
+                            if (compare != 10) {
+                                pasar = pasar + value;
+                                i++;
+                            }
+
+                        }
+                        values.add(pasar);
+                        pasar = "";
+
+                    }
+                    DoctorMenu p = new DoctorMenu();
+                    JOptionPane.showMessageDialog(p, values.toString());
+                    for (int i = 0; i < (values.size()) - 1; i++) {
+                        values_int.add(Integer.parseInt(values.get(i)));
+                    }
+                    values_int_public = values_int;
+                    Graficas_ECG graficar = new Graficas_ECG();
+                    graficar.setVisible(true);
+                }
+            }
+            if (!found) {
+                DoctorMenu p = new DoctorMenu();
+                JOptionPane.showMessageDialog(p, "It does not exist");
+            }
+
+    }
+         catch (IOException ex) {
+            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        DoctorMenu p = new DoctorMenu();
+        p.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_emgActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -416,7 +714,7 @@ public class DoctorMenu extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DoctorMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
