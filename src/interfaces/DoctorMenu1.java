@@ -25,7 +25,7 @@ import static utils.InputOutput.getStringFromKeyboard;
  *
  * @author gustavo
  */
-public class DoctorMenu extends javax.swing.JFrame {
+public class DoctorMenu1 extends javax.swing.JFrame {
     public static String response = new String("");
     private static InputStream inputStream2;
     private static OutputStream outputStream2;
@@ -40,7 +40,7 @@ public class DoctorMenu extends javax.swing.JFrame {
     /**
      * Creates new form DoctorMenu
      */
-    public DoctorMenu() {
+    public DoctorMenu1() {
         initComponents();
     }
 
@@ -175,13 +175,9 @@ public class DoctorMenu extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             values_int_public = null;
-            outputStream2 = socket2.getOutputStream();
-            dout2 = new DataOutputStream(outputStream2);
-            inputStream2 = socket2.getInputStream();
-            dint2 = new DataInputStream(inputStream2);
             int entero = 3;
             dout2.writeInt(entero);
-            objectInputStream = new ObjectInputStream(inputStream2);
+            
             List<Patient> patientList = new ArrayList <Patient>();
             Object tmp_ecg;
             while ((tmp_ecg = objectInputStream.readObject()) != null) {
@@ -191,13 +187,13 @@ public class DoctorMenu extends javax.swing.JFrame {
             int patient_id = 0;
             if (!patientList.isEmpty()) {
                 for (Patient patient : patientList) {
-                    DoctorMenu p = new DoctorMenu();
+                    DoctorMenu1 p = new DoctorMenu1();
                     JOptionPane.showMessageDialog(p, patient);
                 }
                 String name = JOptionPane.showInputDialog("Enter the name of the patient you want to search: ");
                 for (Patient patient : patientList) {
                     if (patient.getFull_name().contains(name)) {
-                        DoctorMenu p = new DoctorMenu();
+                        DoctorMenu1 p = new DoctorMenu1();
                         JOptionPane.showMessageDialog(p, patient);
                     }
                 }
@@ -211,7 +207,7 @@ public class DoctorMenu extends javax.swing.JFrame {
                 } while (!ids_patients.contains(patient_id));
                 
             } else {
-                DoctorMenu p = new DoctorMenu();
+                DoctorMenu1 p = new DoctorMenu1();
                 JOptionPane.showMessageDialog(p, "You do not have patients");
             }
             dout2.writeInt(patient_id);
@@ -229,7 +225,8 @@ public class DoctorMenu extends javax.swing.JFrame {
             for (Ecg ecg : ecgList) {
                 name_select = ecg.getName_ecg();
                 if (name_select.contains(name_ecg)) {
-                    System.out.println(name_select);
+                    DoctorMenu1 p = new DoctorMenu1();
+                    JOptionPane.showMessageDialog(p, name_select);
                 }
             }
             
@@ -259,12 +256,12 @@ public class DoctorMenu extends javax.swing.JFrame {
                         
                     }
                     for (String value_f : values_f) {
-                        DoctorMenu p = new DoctorMenu();
+                        DoctorMenu1 p = new DoctorMenu1();
                         JOptionPane.showMessageDialog(p, value_f);
                     }
                     
                     //print values of ecg
-                    DoctorMenu p = new DoctorMenu();
+                    DoctorMenu1 p = new DoctorMenu1();
                     //JOptionPane.showMessageDialog(p, ecg);
                     found = true;
                     byte[] ecg_values = ecg.getPatient_ecg();
@@ -287,8 +284,7 @@ public class DoctorMenu extends javax.swing.JFrame {
                         pasar = "";
                         
                     }
-                    p = new DoctorMenu();
-                    JOptionPane.showMessageDialog(p, values.toString());
+                    
                     for (int i = 1; i < (values.size()) - 1; i++) {
                         values_int.add(Integer.parseInt(values.get(i)));
                         
@@ -299,18 +295,18 @@ public class DoctorMenu extends javax.swing.JFrame {
                 }
             }
             if (!found) {
-                DoctorMenu p = new DoctorMenu();
+                DoctorMenu1 p = new DoctorMenu1();
                 JOptionPane.showMessageDialog(p, "It does not exist ");
             }
-            objectInputStream.close();
+            
             
             
         } catch (IOException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         }
-    DoctorMenu p = new DoctorMenu();
+    DoctorMenu1 p = new DoctorMenu1();
     p.setVisible(true);
     this.setVisible(false);    
     
@@ -321,13 +317,11 @@ public class DoctorMenu extends javax.swing.JFrame {
     private void patbynameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patbynameActionPerformed
         try {
             // TODO add your handling code here:
-            outputStream2 = socket2.getOutputStream();
-            dout2 = new DataOutputStream(outputStream2);
-            inputStream2 = socket2.getInputStream();
+            
             //dint2 = new DataInputStream(inputStream2);
             int entero = 1;
             dout2.writeInt(entero);
-            objectInputStream = new ObjectInputStream(inputStream2);
+           
             Object tmp;
             List<Patient> patientList = new ArrayList <Patient>();
             while ((tmp = objectInputStream.readObject()) != null) {
@@ -337,19 +331,19 @@ public class DoctorMenu extends javax.swing.JFrame {
             if (!patientList.isEmpty()) {
             for (Patient patient : patientList) {
                 
-                DoctorMenu p = new DoctorMenu();
+                DoctorMenu1 p = new DoctorMenu1();
                 JOptionPane.showMessageDialog(p, patient);
             }
             String name = JOptionPane.showInputDialog("Enter the name of the patient you want to search: ");
             for (Patient patient : patientList) {
                 if (patient.getFull_name().contains(name)) {
-                    DoctorMenu p = new DoctorMenu();
+                    DoctorMenu1 p = new DoctorMenu1();
                     JOptionPane.showMessageDialog(p, patient);
                 }
             }
 
             } else {
-            DoctorMenu p = new DoctorMenu();
+            DoctorMenu1 p = new DoctorMenu1();
             JOptionPane.showMessageDialog(p, "There are no patients with that name.");
 
         }
@@ -360,12 +354,12 @@ public class DoctorMenu extends javax.swing.JFrame {
             
             
         } catch (IOException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        DoctorMenu p = new DoctorMenu();
+        DoctorMenu1 p = new DoctorMenu1();
         p.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_patbynameActionPerformed
@@ -373,13 +367,11 @@ public class DoctorMenu extends javax.swing.JFrame {
     private void formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formActionPerformed
         try {
             // TODO add your handling code here:
-            outputStream2 = socket2.getOutputStream();
-            dout2 = new DataOutputStream(outputStream2);
-            inputStream2 = socket2.getInputStream();
+            
             //dint2 = new DataInputStream(inputStream2);
             int entero = 4;
             dout2.writeInt(entero);
-            objectInputStream2 = new ObjectInputStream(inputStream2);
+            
             Object tmp;
             List<Patient> patientList = new ArrayList <Patient>();
             while ((tmp = objectInputStream2.readObject()) != null) {
@@ -390,20 +382,20 @@ public class DoctorMenu extends javax.swing.JFrame {
             int patient_id = 0;
             if (!patientList.isEmpty()) {
                 for (Patient patient2 : patientList) {
-                    DoctorMenu p = new DoctorMenu();
+                    DoctorMenu1 p = new DoctorMenu1();
                     JOptionPane.showMessageDialog(p, patient2);
                 }
                 String name = JOptionPane.showInputDialog("Enter the name of the patient you want to search: ");
                 for (Patient patient2 : patientList) {
                     if (patient.getFull_name().contains(name)) {
-                        DoctorMenu p = new DoctorMenu();
+                        DoctorMenu1 p = new DoctorMenu1();
                         JOptionPane.showMessageDialog(p, patient2);
                     }
                 }
                 patient_id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id of the patient you want to search the form: "));
 
             } else {
-                DoctorMenu p = new DoctorMenu();
+                DoctorMenu1 p = new DoctorMenu1();
                 JOptionPane.showMessageDialog(p, "You do not have patients");
             }
             
@@ -429,17 +421,17 @@ public class DoctorMenu extends javax.swing.JFrame {
 
             }
             for (String value : values) {
-                DoctorMenu p = new DoctorMenu();
+                DoctorMenu1 p = new DoctorMenu1();
                 JOptionPane.showMessageDialog(p, value);
             }
                 
             }
         } catch (IOException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        DoctorMenu p = new DoctorMenu();
+        DoctorMenu1 p = new DoctorMenu1();
         p.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_formActionPerformed
@@ -447,10 +439,7 @@ public class DoctorMenu extends javax.swing.JFrame {
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
         // TODO add your handling code here:
         try{
-        outputStream2 = socket2.getOutputStream();
-        dout2 = new DataOutputStream(outputStream2);
-        inputStream2 = socket2.getInputStream();
-        dint2 = new DataInputStream(inputStream2);
+       
         int entero = 7;
         dout2.writeInt(entero);
         String okay;
@@ -458,16 +447,16 @@ public class DoctorMenu extends javax.swing.JFrame {
         dout2.writeUTF(password);
         okay = dint2.readUTF();
         if (okay.equals("Action Completed")){
-            DoctorMenu p = new DoctorMenu();
+            DoctorMenu1 p = new DoctorMenu1();
             JOptionPane.showMessageDialog(p, "Action completed!");
         } else {
-            DoctorMenu p = new DoctorMenu();
+            DoctorMenu1 p = new DoctorMenu1();
             JOptionPane.showMessageDialog(p, "Can not be completed!");
         }
         } catch (IOException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        DoctorMenu p = new DoctorMenu();
+        DoctorMenu1 p = new DoctorMenu1();
         p.setVisible(true);
         this.setVisible(false);
 
@@ -476,10 +465,7 @@ public class DoctorMenu extends javax.swing.JFrame {
     private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
         // TODO add your handling code here:
         try{
-        outputStream2 = socket2.getOutputStream();
-        dout2 = new DataOutputStream(outputStream2);
-        inputStream2 = socket2.getInputStream();
-        dint2 = new DataInputStream(inputStream2);
+        
         int entero = 6;
         dout2.writeInt(entero);
         String okay;
@@ -487,16 +473,16 @@ public class DoctorMenu extends javax.swing.JFrame {
         dout2.writeUTF(password);
         okay = dint2.readUTF();
         if (okay.equals("Action Completed")){
-            DoctorMenu p = new DoctorMenu();
+            DoctorMenu1 p = new DoctorMenu1();
             JOptionPane.showMessageDialog(p, "Action completed!");
         } else {
-            DoctorMenu p = new DoctorMenu();
+            DoctorMenu1 p = new DoctorMenu1();
             JOptionPane.showMessageDialog(p, "Can not be completed!");
         }
         } catch (IOException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        DoctorMenu p = new DoctorMenu();
+        DoctorMenu1 p = new DoctorMenu1();
         p.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_usernameActionPerformed
@@ -504,13 +490,10 @@ public class DoctorMenu extends javax.swing.JFrame {
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         try {
             // TODO add your handling code here:
-            outputStream2 = socket2.getOutputStream();
-            dout2 = new DataOutputStream(outputStream2);
-            inputStream2 = socket2.getInputStream();
-            dint2 = new DataInputStream(inputStream2);
+            
             int entero = 5;
             dout2.writeInt(entero);
-            objectInputStream = new ObjectInputStream(inputStream2);
+            
             Object tmp;
             List<Patient> patientList = new ArrayList <Patient>();
             while ((tmp = objectInputStream.readObject()) != null) {
@@ -520,28 +503,28 @@ public class DoctorMenu extends javax.swing.JFrame {
             int patient_id = 0;
             if (!patientList.isEmpty()) {
                 for (Patient patient : patientList) {
-                    DoctorMenu p = new DoctorMenu();
+                    DoctorMenu1 p = new DoctorMenu1();
                     JOptionPane.showMessageDialog(p, patient);
                 }
                 String name = JOptionPane.showInputDialog("Enter the name of the patient you want to search: ");
                 for (Patient patient : patientList) {
                     if (patient.getFull_name().contains(name)) {
-                        DoctorMenu p = new DoctorMenu();
+                        DoctorMenu1 p = new DoctorMenu1();
                         JOptionPane.showMessageDialog(p, patient);
                     }
                 }
             patient_id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id of the patient you want to delete: "));
 
             } else {
-                DoctorMenu p = new DoctorMenu();
+                DoctorMenu1 p = new DoctorMenu1();
                 JOptionPane.showMessageDialog(p, "You do not have this patient");
             }
         } catch (IOException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        DoctorMenu p = new DoctorMenu();
+        DoctorMenu1 p = new DoctorMenu1();
         p.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_deleteActionPerformed
@@ -550,14 +533,11 @@ public class DoctorMenu extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             values_int_public = null;
-            outputStream2 = socket2.getOutputStream();
-            dout2 = new DataOutputStream(outputStream2);
-            inputStream2 = socket2.getInputStream();
-            dint2 = new DataInputStream(inputStream2);
+            
             int entero = 2;
             dout2.writeInt(entero);
             
-            objectInputStream = new ObjectInputStream(inputStream2);
+            
             List<Patient> patientList = new ArrayList <Patient>();
             Object tmp_emg;
             while ((tmp_emg = objectInputStream.readObject()) != null) {
@@ -567,13 +547,13 @@ public class DoctorMenu extends javax.swing.JFrame {
             int patient_id = 0;
             if (!patientList.isEmpty()) {
             for (Patient patient : patientList) {
-                DoctorMenu p = new DoctorMenu();
+                DoctorMenu1 p = new DoctorMenu1();
                 JOptionPane.showMessageDialog(p, patient);
             }
             String name = JOptionPane.showInputDialog("Enter the name of the patient you want to search: ");
             for (Patient patient : patientList) {
                 if (patient.getFull_name().contains(name)) {
-                    DoctorMenu p = new DoctorMenu();
+                    DoctorMenu1 p = new DoctorMenu1();
                     JOptionPane.showMessageDialog(p, patient);
                 }
             }
@@ -587,7 +567,7 @@ public class DoctorMenu extends javax.swing.JFrame {
             } while (!ids_patients.contains(patient_id));
 
             } else {
-                DoctorMenu p = new DoctorMenu();
+                DoctorMenu1 p = new DoctorMenu1();
                 JOptionPane.showMessageDialog(p, "You do not have patients");
             }
             
@@ -608,7 +588,7 @@ public class DoctorMenu extends javax.swing.JFrame {
             for (Emg emg : emgList) {
                 name_select = emg.getName_emg();
                 if (name_select.contains(name_emg)) {
-                    DoctorMenu p = new DoctorMenu();
+                    DoctorMenu1 p = new DoctorMenu1();
                     JOptionPane.showMessageDialog(p, name_select);
                 }
             }
@@ -639,7 +619,7 @@ public class DoctorMenu extends javax.swing.JFrame {
 
                     }
                     for (String value_f : values_f) {
-                        DoctorMenu p = new DoctorMenu();
+                        DoctorMenu1 p = new DoctorMenu1();
                         JOptionPane.showMessageDialog(p, value_f);
                     }
 
@@ -649,7 +629,7 @@ public class DoctorMenu extends javax.swing.JFrame {
                     List<String> values = new ArrayList();
                     List<Integer> values_int = new ArrayList();
                     String pasar = "";
-                    System.out.println(emg_values.length);
+                    
 
                     for (int i = 0; i < (emg_values.length) - 1; i++) {
                         char value = (char) emg_values[i];
@@ -667,7 +647,7 @@ public class DoctorMenu extends javax.swing.JFrame {
                         pasar = "";
 
                     }
-                    DoctorMenu p = new DoctorMenu();
+                    DoctorMenu1 p = new DoctorMenu1();
                     JOptionPane.showMessageDialog(p, values.toString());
                     for (int i = 1; i < (values.size()) - 1; i++) {
                         values_int.add(Integer.parseInt(values.get(i)));
@@ -678,17 +658,17 @@ public class DoctorMenu extends javax.swing.JFrame {
                 }
             }
             if (!found) {
-                DoctorMenu p = new DoctorMenu();
+                DoctorMenu1 p = new DoctorMenu1();
                 JOptionPane.showMessageDialog(p, "It does not exist");
             }
 
     }
          catch (IOException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DoctorMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        DoctorMenu p = new DoctorMenu();
+        DoctorMenu1 p = new DoctorMenu1();
         p.setVisible(true);
         this.setVisible(false);
         
@@ -697,38 +677,51 @@ public class DoctorMenu extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    public static void main() {
+
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+            * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+            */
+            try {
+                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
                 }
+            } catch (ClassNotFoundException ex) {
+                java.util.logging.Logger.getLogger(DoctorMenu1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                java.util.logging.Logger.getLogger(DoctorMenu1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                java.util.logging.Logger.getLogger(DoctorMenu1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+                java.util.logging.Logger.getLogger(DoctorMenu1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DoctorMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DoctorMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DoctorMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DoctorMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            //</editor-fold>
+            //</editor-fold>
+        
+            outputStream2 = socket2.getOutputStream();
+            dout2 = new DataOutputStream(outputStream2);
+            inputStream2 = socket2.getInputStream();
+            dint2 = new DataInputStream(inputStream2);
+            objectInputStream = new ObjectInputStream(inputStream2);
+            /* Create and display the form */
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    
+                    
+                    new DoctorMenu1().setVisible(true);
+                }
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                
-                
-                new DoctorMenu().setVisible(true);
-            }
-        });
+        //</editor-fold>
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

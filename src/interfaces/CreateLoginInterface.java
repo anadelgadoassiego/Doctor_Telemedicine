@@ -8,6 +8,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -177,7 +178,8 @@ public class CreateLoginInterface extends javax.swing.JFrame {
                 CreateLoginInterface c = new CreateLoginInterface();
                 JOptionPane.showMessageDialog(c, "Welcome doctor!");
                 
-                DoctorMenu pat = new DoctorMenu();
+                DoctorMenu1 pat = new DoctorMenu1();
+                interfaces.DoctorMenu1.main();
                 pat.setVisible(true);
                 this.setVisible(false);
             } else{
@@ -236,7 +238,7 @@ public class CreateLoginInterface extends javax.swing.JFrame {
             //</editor-fold>
             //</editor-fold>
             
-            socket = new Socket("192.168.1.131", 9000);
+            socket = new Socket(InetAddress.getLocalHost(), 9000);
             outputStream = socket.getOutputStream();
         
             inputStream = socket.getInputStream();
