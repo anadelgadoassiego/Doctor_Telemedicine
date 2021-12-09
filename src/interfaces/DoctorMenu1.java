@@ -117,6 +117,11 @@ public class DoctorMenu1 extends javax.swing.JFrame {
         });
 
         back.setText("Go back");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -374,10 +379,10 @@ public class DoctorMenu1 extends javax.swing.JFrame {
             
             Object tmp;
             List<Patient> patientList = new ArrayList <Patient>();
-            while ((tmp = objectInputStream2.readObject()) != null) {
+            while ((tmp = objectInputStream.readObject()) != null) {
                 Patient patient = (Patient) tmp;
                 patientList.add(patient);
-                
+            }    
                 
             int patient_id = 0;
             if (!patientList.isEmpty()) {
@@ -387,7 +392,7 @@ public class DoctorMenu1 extends javax.swing.JFrame {
                 }
                 String name = JOptionPane.showInputDialog("Enter the name of the patient you want to search: ");
                 for (Patient patient2 : patientList) {
-                    if (patient.getFull_name().contains(name)) {
+                    if (patient2.getFull_name().contains(name)) {
                         DoctorMenu1 p = new DoctorMenu1();
                         JOptionPane.showMessageDialog(p, patient2);
                     }
@@ -400,7 +405,7 @@ public class DoctorMenu1 extends javax.swing.JFrame {
             }
             
             dout2.writeInt(patient_id);
-            Patient patient_form = (Patient) objectInputStream2.readObject();
+            Patient patient_form = (Patient) objectInputStream.readObject();
             byte[] form = patient_form.getPatient_form();
             List<String> values = new ArrayList();
             String pasar = "";
@@ -425,7 +430,7 @@ public class DoctorMenu1 extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(p, value);
             }
                 
-            }
+            
         } catch (IOException ex) {
             Logger.getLogger(DoctorMenu1.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -673,6 +678,14 @@ public class DoctorMenu1 extends javax.swing.JFrame {
         this.setVisible(false);
         
     }//GEN-LAST:event_emgActionPerformed
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        // TODO add your handling code here:
+        CreateLoginInterface c = new CreateLoginInterface();
+        c.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_backActionPerformed
 
     /**
      * @param args the command line arguments
