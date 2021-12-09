@@ -169,6 +169,7 @@ public class ClientSendCharactersViaNetwork {
                         List<Emg> emgList = new ArrayList <Emg>();
                         Object tmp_emgList;
                         while ((tmp_emgList = objectInputStream.readObject()) != null) {
+                            
                             Emg emg = (Emg) tmp_emgList;
                             emgList.add(emg);
                         }
