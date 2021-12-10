@@ -653,7 +653,7 @@ public class DoctorMenu1 extends javax.swing.JFrame {
 
                     }
                     DoctorMenu1 p = new DoctorMenu1();
-                    JOptionPane.showMessageDialog(p, values.toString());
+                    //JOptionPane.showMessageDialog(p, values.toString());
                     for (int i = 1; i < (values.size()) - 1; i++) {
                         values_int.add(Integer.parseInt(values.get(i)));
                     }
