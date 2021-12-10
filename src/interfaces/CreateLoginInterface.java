@@ -128,7 +128,7 @@ public class CreateLoginInterface extends javax.swing.JFrame {
             int roleId = 2;
             dout.writeInt(roleId);
             String name = JOptionPane.showInputDialog("Introduce your full name Dr: ");
-            String username2 = JOptionPane.showInputDialog("DNI (this will be your username): ");
+            String username2 = JOptionPane.showInputDialog("username: ");
             String password2 = JOptionPane.showInputDialog("Introduce your Password");
      
             
